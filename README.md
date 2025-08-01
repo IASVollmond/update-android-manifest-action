@@ -1,38 +1,42 @@
 # Update Android Manifest Action
 
-This action update the `versionCode` and `versionName` properties of the AndroidManifest.xml file for your Android projects.
+Custom-GitHub-Action, um während eines Workflows die Werte 'package', 'version-Code' und 'versionName' der AndroidManifest.xml zu manipulieren.
 
-## Inputs
+Die Action manipuliert die XML nur bei Laufzeit des Workflows. Das heißt die .apk-Datei, die über den Workflow gebaut wird, beinhaltet diese, aber es findet keine Veränderung des Quellcodes statt.
+
+Repository ist ein Detached Fork von https://github.com/damienaicheh/update-android-version-manifest-action.
+
+## Parameter
 
 ### `package-name`
 
-**Required** The value of the package name
+**Required** Wert, der für 'package' im Android-Manifest eingesetzt wird. Als String-Wert mitgeben.
 
 ### `android-manifest-path`
 
-**Required** The relative path for the AndroidManifest.xml file.
+**Required** Der Pfad, der zu "AndroidManifest.xml" zeigt. Als String-Wert mitgeben.
 
 ### `version-code` 
   
-**Required** The value of the version code, this must be between 0 and 2100000000.
+**Required** Der Wert des Versioncodes. Dieser muss zwischen 0 und 2100000000 liegen. Als Integer-Wert mitgeben.
 
 ###  `version-name`
     
-**Required** The value of the version name
+**Required** Der Wert des Versionsnamen. Als String-Wert mitgeben.
 
 ###  `print-file`
 
-Output the AndroidManifest.xml file in console before and after update.
+Vor und nach dem Update wird das AndroidManifest in den Output geschrieben. Als Boolean-Wert mitgeben.
 
-## Usage
+## Nutzung
 
 ```yaml
 - name: Update AndroidManifest.xml
-  uses: damienaicheh/update-android-version-manifest-action@v1.1.0
+  uses: IASVollmond/update-android-version-manifest-action@main
   with:
-    android-manifest-path: './path_to_your/AndroidManifest.xml'
-    package-name: 'com.example.name'
-    version-code: 2
-    version-name: '2.0'
+    android-manifest-path: './Iaswebde.MDE.Android/Properties/AndroidManifest.xml'
+    package-name: 'com.Iaswebde.Mde'
+    version-code: 122525000
+    version-name: '1.2.2525.00'
     print-file: true
 ```
