@@ -7,16 +7,20 @@ main().catch(handleError)
 
 async function main(): Promise<void> {
     try {
-        let printFile = getBooleanInput('print-file');
-        let androidManifestPath = core.getInput('android-manifest-path');
+
+	let androidManifestPath = core.getInput('android-manifest-path');
 
         if (!fs.existsSync(androidManifestPath)) {
             core.setFailed(`The file path for the AndroidManifest.xml does not exist or is not found: ${androidManifestPath}`);
             process.exit(1);
         }
 
-        let versionCode = core.getInput('version-code');
+	let packageName = core.getInput('package-name');
+	if (!packageName) {
+	    core.setFailed(`Package Name has no value: ${packageName}`);
+	}
 
+        let versionCode = core.getInput('version-code');
         if (!versionCode) {
             core.setFailed(`Version Code has no value: ${versionCode}`);
             process.exit(1);
@@ -27,7 +31,12 @@ async function main(): Promise<void> {
         }
 
         let versionName: string = core.getInput('version-name');
+	if (!versionName) {
+	    core.setFailed(`Version Name has no value: ${versionName}`);
+	    process.exit(1);
+	}
 
+        let printFile = getBooleanInput('print-file');
         if (printFile) {
             core.info('Before update:');
             await exec.exec('cat', [androidManifestPath]);
@@ -36,6 +45,7 @@ async function main(): Promise<void> {
         let filecontent = fs.readFileSync(androidManifestPath).toString();
         fs.chmodSync(androidManifestPath, "600");
 
+	filecontent = filecontent.replace(/package\s*=\s*"([^"]+)"/mg, `package="${packageName}"`);
         filecontent = filecontent.replace(/versionCode\s*=\s*"(\d+(?:\.\d)*)"/mg, `versionCode=\"${versionCode}\"`);
         filecontent = filecontent.replace(/versionName\s*=\s*"(\d+(?:\.\d+)*)"/mg, `versionName=\"${versionName}\"`);
 

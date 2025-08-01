@@ -1,9 +1,12 @@
-name: 'Update Android version Manifest action'
-description: 'Update the AndroidManifest.xml file'
-author: 'damienaicheh'
+name: 'Update AndroidManifest.xml Action'
+description: 'Update the AndroidManifest.xml file to dynamically version or name projects built for Android.'
+author: 'zockicookie'
 inputs:
   android-manifest-path:
     description: 'Relative path for the AndroidManifest.xml file.'
+    required: true
+  package-name:
+    description: 'Package name'
     required: true
   version-code:
     description: 'Version code value'
@@ -19,4 +22,4 @@ runs:
   main: 'dist/index.js'
 branding:
   icon: 'file'
-  color: 'green'
+  color: 'blue'
