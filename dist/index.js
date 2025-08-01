@@ -96,7 +96,7 @@ function main() {
                 core.info('After update:');
                 yield exec.exec('cat', [androidManifestPath]);
             }
-            core.info(`AndroidManifest.xml updated successfully with versionCode: ${versionCode} and versionName: ${versionName}`);
+            core.info(`AndroidManifest.xml updated successfully with packageName: ${packageName}, versionCode: ${versionCode} and versionName: ${versionName}`);
         }
         catch (error) {
             if (error instanceof Error) {
